@@ -68,11 +68,12 @@ module.exports = {
           formResponse([], res, 400, "File is not Image");
         } else {
           if (!err) {
-            const imageName = `${process.env.BASE_URI}/images/${req.file.filename}`;
+            const imageName = `${req.file.filename}`;
             userModel
               .patchUser(id, req.body, imageName)
               .then((data) => {
                 formResponse(data, res, 201, "Success change Photo");
+                console.log(data)
               })
               .catch((err) => {
                 formResponse(err, res, 400, "Failed change Photo");
