@@ -25,21 +25,7 @@ app.use("/zwallet/api/v1/user", UserRoute);
 app.use("/zwallet/api/v1/transaction", TransactionRoute);
 app.use("/zwallet/api/v1/topup", TopupRoute);
 
-(async () => {
-    console.log(await publicIp.v4());
-    //=> '46.5.21.123'
- 
-    console.log(await publicIp.v6());
-    //=> 'fe80::200:f8ff:fe21:67cf'
-})();
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
-  (async () => {
-    console.log(await publicIp.v4());
-    //=> '46.5.21.123'
- 
-    console.log(await publicIp.v6());
-    //=> 'fe80::200:f8ff:fe21:67cf'
-	})();
+  console.log(`Server running on ${publicIp.v4()} port ${process.env.PORT}`);
 });
