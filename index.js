@@ -27,5 +27,8 @@ app.use("/zwallet/api/v1/topup", TopupRoute);
 
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server running on ${publicIp.v4()} port ${process.env.PORT}`);
+  
+  (async () => {
+    console.log(await ,`Server running on ${publicIp.v4()} port ${process.env.PORT}`);
+	})();
 });
