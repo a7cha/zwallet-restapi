@@ -77,7 +77,10 @@ module.exports = {
                 });
               }
             });
-          } else {
+          } else if (res[0].isActive == undefined){
+              console.log('tidak ada')
+          }
+          else {
             reject(err);
           }
         }
