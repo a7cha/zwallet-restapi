@@ -11,7 +11,7 @@ module.exports = {
           `INSERT INTO user (email, password, fullName, roleId, isActive) VALUES ('${email}', '${newPassword}', '${fullName}', 100, 1)`,
           (err, res) => {
             console.log(res, "ini adalah ress");
-            console.log(err.message, "ini adalah err");
+            console.log(err, "ini adalah err");
             if (!err) {
               resolve(res);
             } else {
@@ -23,15 +23,14 @@ module.exports = {
     });
   },
 
-  login: (email, password) => {
+  login: (email, password,devtoken) => {
     // console.log(email, password, "model");
     return new Promise((resolve, reject) => {
       db.query(
-        "SELECT isActive FROM user WHERE email= ?",
+        "SELECT isActive, device_token FROM user WHERE email= ?",
         email,
         (err, res) => {
-          // console.log(res[0].isActive);
-          if (res[0].isActive == "1") {
+          if (res[0].isActive == 1 && res[0].isActive != 'NULL' && res[0].device_token === devtoken || res[0].device_token === '-' ) {
             db.query("SELECT * FROM user WHERE email= ?", email, (err, res) => {
               if (!err) {
                 let data = [];
@@ -57,6 +56,7 @@ module.exports = {
                   id,
                   name,
                 } = data[0];
+                console.log(devtoken ,' ini deftoken')
                 console.log(hashedPassword);
                 bcrypt.compare(password, hashedPassword, (error, result) => {
                   console.log(result);
@@ -77,12 +77,15 @@ module.exports = {
                 });
               }
             });
-          } else if (res[0].isActive == undefined){
-              console.log('tidak ada')
+          } else if (res == ''){
+            console.log('invalid')
+          } else if (res[0].device_token !== devtoken) {
+            console.log('udah login di device yang sama')
           }
           else {
             reject(err);
           }
+
         }
       );
     });

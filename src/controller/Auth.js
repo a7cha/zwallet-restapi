@@ -19,13 +19,13 @@ module.exports = {
     }
   },
   login: (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, devtoken } = req.body;
     console.log(email, password);
-    if (email && password) {
+    if (email && password && devtoken) {
       authModel
-        .login(email, password)
+        .login(email, password, devtoken)
         .then((data) => formResponse(data, res, 200, "Succes"))
-        .catch(() => formResponse([], res, 404, "failed"));
+        .catch((err) => formResponse(err, res, 403, "failed") );
     } else {
       formResponse([], res, 404, "Fill all fields");
     }

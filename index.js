@@ -4,6 +4,9 @@ require("dotenv").config();
 const cors = require("cors");
 const midtransClient = require("midtrans-client");
 const publicIp = require('public-ip');
+const internalIp = require('internal-ip');
+const admin = require('firebase-admin');
+const serviceAccount = require('./helloworld/zwalleet-1337-firebase-adminsdk-7hhof-036fe161da.json')
 
 const app = express();
 // const db = require("./src/helper/db");
@@ -26,11 +29,18 @@ app.use("/zwallet/api/v1/transaction", TransactionRoute);
 app.use("/zwallet/api/v1/topup", TopupRoute);
 
 
+admin.initializeApp({
+	credential : admin.credential.cert(serviceAccount),
+	databaseURL : 'https://zwalleet-1337.firebaseio.com'
+});
+
 
 app.listen(process.env.PORT, () => {
   
   (async () => {
-    const getIp = await publicIp.v4()
-    console.log(`Server running on ${getIp} port ${process.env.PORT}`);
+    const getpub = await publicIp.v4()
+    const getloc = await internalIp.v4()
+    console.log(`Server running server ip http://${getpub}:${process.env.PORT}/`);
+    console.log(`Server running local development ip http://${getloc}:${process.env.PORT}/`);
 	})();
 });
