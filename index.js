@@ -29,14 +29,35 @@ app.use("/zwallet/api/v1/transaction", TransactionRoute);
 app.use("/zwallet/api/v1/topup", TopupRoute);
 
 
-admin.initializeApp({
-	credential : admin.credential.cert(serviceAccount),
-	databaseURL : 'https://zwalleet-1337.firebaseio.com'
-});
+
 
 
 app.listen(process.env.PORT, () => {
-  
+admin.initializeApp({
+	credential : admin.credential.cert(serviceAccount),
+	databaseURL : 'https://zwalleet-1337.firebaseio.com'
+}, console.log(admin.credential.cert(serviceAccount)));
+
+
+const registrationToken = 'difSyfI1RGSYF5b3xPCNu9:APA91bEOCOREhzwTMrD-SV2LxmheJT6jRiFU4_QQEaS8fu6cNE7X2oM3YQBcowWIFKT0VX89uxsRUCfNp1HNL8zsqU1c8nm7YPyrEHSHl04XKexTny0gaYPErmh5W-zI4I0jtyFfAXJK'
+
+var payload = {
+  notification: {
+    title: '$FooCorp up 1.43% on the day',
+    body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
+  }
+};
+
+admin.messaging().sendToDevice(registrationToken, payload)
+  .then(function(response) {
+    // See the MessagingDevicesResponse reference documentation for
+    // the contents of response.
+    console.log('Successfully sent message:', response);
+  })
+  .catch(function(error) {
+    console.log('Error sending message:', error);
+  });
+
   (async () => {
     const getpub = await publicIp.v4()
     const getloc = await internalIp.v4()
