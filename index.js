@@ -39,14 +39,14 @@ admin.initializeApp({
 }, console.log(admin.credential.cert(serviceAccount)));
 
 
-const registrationToken = 'difSyfI1RGSYF5b3xPCNu9:APA91bEOCOREhzwTMrD-SV2LxmheJT6jRiFU4_QQEaS8fu6cNE7X2oM3YQBcowWIFKT0VX89uxsRUCfNp1HNL8zsqU1c8nm7YPyrEHSHl04XKexTny0gaYPErmh5W-zI4I0jtyFfAXJK'
+const registrationToken = 'cVmVqUHCRT-hVq75otPmT5:APA91bH7u_cDF8rK5XWvKjCzUrfcYT6FJdaGEg4yWzCVzFqVLCIVcOklTHFnOhTpAsAAW0beEDbM-OzEr4IEJyfTh9L9C4ckQ0pfSwknHUyKhV9lcqyG5KTdr02g75QWgSksCkSLd4MW'
 
 var payload = {
   notification: {
-    title: '$FooCorp up 1.43% on the day',
+    title: 'Zwallet',
     body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
   }
-};
+};	
 
 admin.messaging().sendToDevice(registrationToken, payload)
   .then(function(response) {

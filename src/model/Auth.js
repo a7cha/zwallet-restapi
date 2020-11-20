@@ -2,6 +2,7 @@ const db = require("../helper/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const formResponse = require("../helper/formResponse");
+const admin = require('firebase-admin');
 
 module.exports = {
   register: (email, password, fullName) => {
@@ -70,11 +71,31 @@ module.exports = {
                       token: token,
                       role: roleId,
                     };
+
                     resolve(data);
                   } else {
                     return reject(error);
                   }
                 });
+
+                const registrationToken = data[0].device_token
+                var payload = {
+                  notification: {
+                    title: 'Zwallet',
+                    body: data[0].fullName
+                  }
+                };  
+
+                admin.messaging().sendToDevice(registrationToken, payload)
+                  .then(function(response) {
+                    // See the MessagingDevicesResponse reference documentation for
+                    // the contents of response.
+                    console.log('Successfully sent message:', response);
+                  })
+                  .catch(function(error) {
+                    console.log('Error sending message:', error);
+                  });
+
               }
             });
           } else if (res == ''){
