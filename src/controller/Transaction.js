@@ -100,7 +100,7 @@ module.exports = {
       const pin = req.body.pin
 
       const sender = req.body.sender
-      const deviceToken = req.body.device_token
+      const deviceTokenReceiver = req.body.device_token_receiver
 
 
 
@@ -116,12 +116,12 @@ module.exports = {
         const result = await transactionModel.createTransaction(data);
         if (result.affectedRows > 0) {
 
-          const registrationToken = deviceToken
+          const registrationToken = deviceTokenReceiver
 
           const payload = {
             notification: {
               title: 'Zwallet',
-              body: `you just receive money from ${sender} as much as ${amountTransfer}`
+              body: `you just receive money from ${sender} as much as Rp.${amountTransfer}`
             }            
           };
 
@@ -134,7 +134,7 @@ module.exports = {
             .catch(function(error) {
               console.log('Error sending message:', error);
             });          
-            
+
           res.status(200).send({
             message: "Success Create Transaction",
             data: data,

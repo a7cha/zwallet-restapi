@@ -189,7 +189,7 @@ module.exports = {
   getUserById: (id) => {
     return new Promise((resolve, reject) => {
       db.query(
-        `select id, fullName, email, password, pin, phoneNumber, balance, img, createdDate from user where id= ${id} and isActive = 1`,
+        `select id, fullName, email, password, pin, phoneNumber, device_token, balance, img, createdDate from user where id= ${id} and isActive = 1`,
         (err, res) => {
           if (!err) {
             resolve(res);
