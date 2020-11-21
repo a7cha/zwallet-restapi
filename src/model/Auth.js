@@ -121,7 +121,7 @@ module.exports = {
         console.log(hashedPassword, "hash pw model");
 
         db.query(
-          `UPDATE user SET password='${hashedPassword}' WHERE email=?`,
+          `UPDATE user SET  device_token='-', password='${hashedPassword}' WHERE email=?`,
           email,
           (err, result) => {
             if (!err) {
