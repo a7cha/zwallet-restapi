@@ -115,30 +115,35 @@ module.exports = {
         delete data.balanceLeft;
         const result = await transactionModel.createTransaction(data);
         if (result.affectedRows > 0) {
+            if (deviceTokenReceiver != '-'){
+            const registrationToken = deviceTokenReceiver
 
-          const registrationToken = deviceTokenReceiver
+            const payload = {
+              notification: {
+                title: 'Zwallet',
+                body: `you just receive money from ${sender} as much as Rp.${amountTransfer}`
+              }            
+            };
 
-          const payload = {
-            notification: {
-              title: 'Zwallet',
-              body: `you just receive money from ${sender} as much as Rp.${amountTransfer}`
-            }            
-          };
+            admin.messaging().sendToDevice(registrationToken, payload)
+              .then(function(response) {
+                // See the MessagingDevicesResponse reference documentation for
+                // the contents of response.
+                console.log('Successfully sent message:', response);
+              })
+              .catch(function(error) {
+                console.log('Error sending message:', error);
+              });             
+            } else {
+              res.status(200).send({
+                message: "Success Create Transaction",
+                data: data,
+              });              
+            }
 
-          admin.messaging().sendToDevice(registrationToken, payload)
-            .then(function(response) {
-              // See the MessagingDevicesResponse reference documentation for
-              // the contents of response.
-              console.log('Successfully sent message:', response);
-            })
-            .catch(function(error) {
-              console.log('Error sending message:', error);
-            });          
+         
 
-          res.status(200).send({
-            message: "Success Create Transaction",
-            data: data,
-          });
+
 
 
         } else {
@@ -148,6 +153,7 @@ module.exports = {
         formResponse([], res, 400, "Wrong Pin");
       }
     } catch (error) {
+      console.log(error.message)
       formResponse([], res, 500, error.message);
     }
   },

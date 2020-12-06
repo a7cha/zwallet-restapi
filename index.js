@@ -9,6 +9,7 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./helloworld/zwalleet-1337-firebase-adminsdk-7hhof-036fe161da.json')
 const db = require('./src/helper/db')
 
+
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -23,24 +24,24 @@ const TopupRoute = require("./src/routes/Topup");
 
 app.use('*',cors()); // WAJIB DI ISI
 
-io.on('connection', socket => {
-  console.log('user connect')
-
-  socket.on('getId', id  => { 
-    if(id){
-      socket.join(id)
-      console.log('datanya adalah ini : ', id)
-      db.query(`SELECT balance FROM user WHERE id = ${id}`, (err, res) => {
-        io.to(id).emit('get-data', res[0].balance)
-        console.log(res[0].balance)
-      });      
-    }
-  })
-
-  socket.on('disconnect', () => {
-    console.log('user disconnect')
-  })
-})
+// io.on('connection', socket => {
+//   console.log('user connect')
+// 
+//   setTimeout(socket.on('getId', id  => { 
+//     if(id){
+//       socket.join(id)
+//       console.log('datanya adalah ini : ', id)
+//       db.query(`SELECT balance FROM user WHERE id = ${id}`, (err, res) => {
+//         io.to(id).emit('get-data', res[0].balance)
+//         console.log(res[0].balance)
+//       });      
+//     }
+//   }), 0)
+// 
+//   socket.on('disconnect', () => {
+//     console.log('user disconnect')
+//   })
+// })
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -68,12 +69,12 @@ admin.initializeApp({
 
 
 
-  (async () => {
-    const getpub = await publicIp.v4()
-    const getloc = await internalIp.v4()
-    console.log(`Server running server ip http://${getpub}:${process.env.PORT}/`);
-    console.log(`Server running local development ip http://${getloc}:${process.env.PORT}/`);
+  // (async () => {
+    // const getpub = await publicIp.v4()
+    // const getloc = await internalIp.v4()
+    console.log('Server running server ip http://${getpub}:${process.env.PORT}/');
+    console.log('Server running local development ip http://${getloc}:${process.env.PORT}/');
 
- 
-	})();
+ // 
+	// })();
 });

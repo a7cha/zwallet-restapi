@@ -167,6 +167,7 @@ module.exports = {
           message: `Success get all user data`,
           data: result,
         });
+        
       } else {
         formResponse([], res, 400, "The data is empty");
       }

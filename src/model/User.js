@@ -78,7 +78,7 @@ module.exports = {
       if (imageUpload != "undefined") {
         console.log("ini fhoto");
         db.query(
-          `UPDATE user SET img='${imageUpload}' ${data} WHERE id=${id}`,
+          `UPDATE user SET img='${imageUpload}'  WHERE id=${id}`,
           (err, res) => {
             console.log(err);
             console.log(res);

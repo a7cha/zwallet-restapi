@@ -21,7 +21,7 @@ module.exports = {
   login: (req, res) => {
     const { email, password, devtoken } = req.body;
     console.log(email, password);
-    if (email && password && devtoken) {
+    if (email && password || devtoken) {
       authModel
         .login(email, password, devtoken)
         .then((data) => formResponse(data, res, 200, "Succes"))
