@@ -31,7 +31,7 @@ module.exports = {
         "SELECT isActive, device_token FROM user WHERE email= ?",
         email,
         (err, res) => {
-          if (res[0].isActive == 1 && res[0].isActive != 'NULL' && res[0].device_token === devtoken || res[0].device_token === '-' ) {
+          if (res[0].isActive == 1 && res[0].isActive !== undefined && res[0].device_token === devtoken || res[0].device_token === '-' ) {
             db.query("SELECT * FROM user WHERE email= ?", email, (err, res) => {
               if (!err) {
                 let data = [];

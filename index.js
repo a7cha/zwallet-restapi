@@ -69,12 +69,5 @@ admin.initializeApp({
 
 
 
-  // (async () => {
-    // const getpub = await publicIp.v4()
-    // const getloc = await internalIp.v4()
-    console.log('Server running server ip http://${getpub}:${process.env.PORT}/');
-    console.log('Server running local development ip http://${getloc}:${process.env.PORT}/');
 
- // 
-	// })();
 });
