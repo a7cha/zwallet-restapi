@@ -68,18 +68,20 @@ module.exports = {
   patchUser: (id, body, image) => {
     const data = Object.entries(body).map((item) => {
       return parseInt(item[1]) > 0
-        ? `${item}`
+        ? `${item[0]}=${item[1]}`
         : `${item[0]}='${item[1]}'`;
     });
     const imageUpload = `${image}`;
-    
+    console.log(`${data}`, imageUpload);
     return new Promise((resolve, reject) => {
       // const imageUpload = `${image}`;
       if (imageUpload != "undefined") {
-        
+        console.log("ini fhoto");
         db.query(
           `UPDATE user SET img='${imageUpload}'  WHERE id=${id}`,
           (err, res) => {
+            console.log(err);
+            console.log(res);
             if (!err) {
               resolve(res);
             } else {
