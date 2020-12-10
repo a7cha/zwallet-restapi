@@ -52,10 +52,9 @@ module.exports = {
   patchUser: (req, res) => {
     // console.log(req.token);
     const { id } = req.token;
-    const uploadImage = multer({ storage: storage }).single("images");
+    const limits =  4 * 1000 * 1000 
+    const uploadImage = multer({ storage: storage, limits }).single("images");
     uploadImage(req, res, (err) => {
-      console.log(req.file, "controller");
-      console.log(req.body, "controller");
       if (!req.file) {
         userModel
           .patchUser(id, req.body)
@@ -69,15 +68,19 @@ module.exports = {
         } else {
           if (!err) {
             const imageName = `${req.file.filename}`;
-            userModel
-              .patchUser(id, req.body, imageName)
-              .then((data) => {
-                formResponse(data, res, 201, "Success change Photo");
-                console.log(data)
-              })
-              .catch((err) => {
-                formResponse(err, res, 400, "Failed change Photo");
-              });
+            if(req.file.size > limits){
+              formResponse('ini ya', res, 403, "file terlalu besar");                
+            } else {
+              
+              userModel
+                .patchUser(id, req.body, imageName)
+                .then((data) => {
+                  formResponse(data, res, 201, "Success change Photo");                
+                })
+                .catch((err) => {
+                  formResponse(err, res, 400, err);
+                });
+            }
           } else {
             formResponse(err, res, 400, err.message,'ini error');
           }
