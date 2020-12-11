@@ -47,13 +47,13 @@ module.exports = {
   },
   resetPassword: (req, res) => {
     const { password, email } = req.body;
-    // console.log(password, "controller pw");
-    if (password.length >= 8) {
+    // console.log(res, "controller pw");
+    if (password.length >= 8) { 
       if (email) {
         authModel
           .resetPassword(password, email)
           .then((data) => formResponse(data, res, 200, "Succes"))
-          .catch(() => formResponse([], res, 404, "failed"));
+          .catch(() => formResponse([], res, 403, "failed"));
       } else {
         formResponse([], res, 404, "data not found");
       }

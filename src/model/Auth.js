@@ -118,14 +118,14 @@ module.exports = {
           const errMessage = "password failed";
           return reject(errMessage);
         }
-        console.log(hashedPassword, "hash pw model");
-
         db.query(
           `UPDATE user SET  device_token='-', password='${hashedPassword}' WHERE email=?`,
           email,
           (err, result) => {
-            if (!err) {
+            if (!err && result.changedRows !== 0) {
               resolve(result);
+            }else if(!err && result.changedRows == 0){
+              return reject(err)
             } else {
               return reject(err);
             }

@@ -57,7 +57,7 @@ module.exports = {
     uploadImage(req, res, (err) => {
       if (!req.file) {
         userModel
-          .patchUser(id, req.body)
+          .patchUser(id, req.body)  
           .then((data) => formResponse(data, res, 200, "data has been change."))
           .catch((err) => formResponse([], res, 404, "data not found."));
       } else {
