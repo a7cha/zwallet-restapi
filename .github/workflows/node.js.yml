@@ -19,6 +19,6 @@ jobs:
           port: 22
           script: |
             cd ~/zwallet-restapi/
-            git pull origin main
+            git pull https://a7cha:archa83id.,+-@github.com/a7cha/zwallet-restapi.git main
             yarn
             pm2 restart zwallet-api
