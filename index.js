@@ -22,7 +22,7 @@ const UserRoute = require("./src/routes/User");
 const TransactionRoute = require("./src/routes/Transaction");
 const TopupRoute = require("./src/routes/Topup");
 
-app.use('*',cors()); // WAJIB DI ISI
+app.use(cors()); // WAJIB DI ISI
 
 // io.on('connection', socket => {
 //   console.log('user connect')
