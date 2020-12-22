@@ -54,6 +54,13 @@ $ nodemon start
 * POST  ``` zwallet/api/v1/topup ``` Route for post data topup instruction.
 * PATCH  ``` zwallet/api/v1/topup/7 ``` Route for edit data topup instruction by number identified by Token.
 * DELETE  ``` zwallet/api/v1/topup/7 ``` Route for delete data topup instruction by number identified by Token.
+* POST  ``` zwallet/api/v1/transaction ``` Route for post transfer.
+* GET  ``` zwallet/api/v1/transaction/history ``` Route for get data transaction identified by Token.
+* GET  ``` zwallet/api/v1/transaction/all ``` Route for get all  data transaction.
+* GET  ``` zwallet/api/v1/transaction/history?limit=2&page=1 ``` Route for get history data with pagination.
+
+
+
 
 
 
