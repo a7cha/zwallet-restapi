@@ -48,7 +48,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/images", express.static("images"));
 
-app.get("/", (req, res) => res.send("<h2> Success </h2>"));
+app.get("/", (req, res) => res.send("<h2> berhasil</h2>"));
 
 app.use("/zwallet/api/v1/auth", AuthRoute);
 app.use("/zwallet/api/v1/user", UserRoute);
